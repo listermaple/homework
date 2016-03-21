@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+*{margin:0;padding:0;}
+.box{width:700px;height:400px;position:absolute;left:50%;top:50%;margin:-200px 0 0 -350px;_background:url(images/1.jpg) no-repeat;}
+.box div{position:absolute;left:0;top:0;-webkit-transform-style:preserve-3d;-webkit-transform:perspective(800px) rotate(0deg);}
+.box span{position:absolute;-webkit-transform:translateZ(1px);}
+.box em{position:absolute;-webkit-transform:translateZ(-1px) scale(-1,1)}
+</style>
+<script>
+	window.onload=function(){
+		var oBox=document.querySelector('.box');
+		var oBtn=document.querySelector('.btn');
+		var R=4;
+		var N=7;
+		for(var i=0;i<R;i++){
+			for(var j=0;j<N;j++){
+				var oDiv=document.createElement('div');
+				oDiv.style.width=oBox.offsetWidth/N+'px';
+				oDiv.style.height=oBox.offsetHeight/R+'px';
+				oBox.appendChild(oDiv);
+				oDiv.style.left=j*oDiv.offsetWidth+'px';
+				oDiv.style.top=i*oDiv.offsetHeight+'px';
+				var oSp=document.createElement('span');
+				oSp.style.width=oDiv.offsetWidth+'px';
+				oSp.style.height=oDiv.offsetHeight+'px';
+				oDiv.appendChild(oSp);
+				oSp.style.backgroundImage='url(images/1.jpg)';
+				oSp.style.backgroundPosition=-j*oDiv.offsetWidth+'px '+(-i*oDiv.offsetHeight)+'px';
+				var oEm=document.createElement('em');
+				oEm.style.width=oDiv.offsetWidth+'px';
+				oEm.style.height=oDiv.offsetHeight+'px';
+				oDiv.appendChild(oEm);
+				oEm.style.backgroundImage='url(images/2.jpg)';
+				oEm.style.backgroundPosition=-j*oDiv.offsetWidth+'px '+(-i*oDiv.offsetHeight)+'px';
+				oDiv.c=j;
+				oDiv.r=i;
+			}
+		}	
+		var aDiv=document.querySelectorAll('.box div');
+		var aSp=document.querySelectorAll('span');
+		var aEm=document.querySelectorAll('em');
+		var iNow=0;
+		oBtn.onclick=function(){
+			iNow++;
+			for(var i=0;i<aDiv.length;i++){
+				(function(i){
+					setTimeout(function(){
+						aDiv[i].style.WebkitTransition='0.3s all linear';
+						aDiv[i].style.WebkitTransform='rotateY(180deg)';
+					},(aDiv[i].c+aDiv[i].r)*100)
+				})(i)
+			}
+			aDiv[aDiv.length-1].addEventListener('transitionend',function(){
+					for(var i=0;i<aDiv.length;i++){
+						aDiv[i].style.WebkitTransition='none';
+						aSp[i].style.backgroundImage='url(images/'+(iNow%3+1)+'.jpg)';
+						aDiv[i].style.WebkitTransform='rotateY(0deg)';
+						aEm[i].style.backgroundImage='url(images/'+((iNow+1)%3+1)+'.jpg)';
+					}
+			},false)	
+		};
+		
+	};
+</script>
+<body>
+	<input type="button" value="翻转" class="btn" />
+	<div class="box">
+		
+	</div>
+</body>
+</html>

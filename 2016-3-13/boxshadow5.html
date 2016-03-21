@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+	div{width:200px;height:200px;background:red;}
+</style>
+<script>
+	window.onload=function(){
+		var oBox=document.getElementsByTagName('div')[0];	
+		var bOk=true;
+		function rnd(n,m){
+			return parseInt(n+Math.random()*(m-n));	
+		}
+		var i=0;
+		setInterval(function(){
+			i+=10;
+			if(bOk){
+				oBox.style.boxShadow+=i+'px '+i+'px 10px rgb('+rnd(0,256)+','+rnd(0,256)+','+rnd(0,256)+')';
+				bOk=!bOk;
+			}else{
+				oBox.style.boxShadow+=', '+i+'px '+i+'px 10px rgb('+rnd(0,256)+','+rnd(0,256)+','+rnd(0,256)+')';
+			}
+				
+		},500)
+	};
+</script>
+<body>
+<div>
+	
+</div>
+</body>
+</html>

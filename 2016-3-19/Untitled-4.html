@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+	.box{width:640px;height:20px;background:#ccc;position:relative;left:0;top:0;margin-bottom:10px;}
+	.barbox{height:100%;background:#666;position:absolute;left:0;top:0;}
+	.bar{width:20px;height:100%;background:#000;position:absolute;left:0;top:0;}
+</style>
+<script>
+	window.onload=function(){
+		var oStart=document.querySelector('#start');
+		var oCut=document.querySelector('#cut');
+		var oBox=document.querySelector('.box');
+		var oBabox=document.querySelector('.barbox');
+		var oBar=document.querySelector('.bar');
+		var oV=document.querySelector('video');
+		var bOk=true;
+		oStart.onclick=function(){
+			if(bOk){
+				oV.play();
+				oStart.value='暂停';
+				bOk=!bOk;
+			}else{
+				oV.pause();
+				oStart.value='播放';
+				bOk=!bOk;
+			}
+		};
+		oCut.onclick=function(){
+			oStart.value='播放';
+			bOk=true;
+			oV.pause();
+			oV.currentTime=0;	
+		};
+		oV.ontimeupdate=function(){
+			oBabox.style.width=oV.currentTime/oV.duration*oBox.offsetWidth+'px';
+			var l=oV.currentTime/oV.duration*oBox.offsetWidth;
+			if(l>oBox.offsetWidth-oBar.offsetWidth){
+				l=oBox.offsetWidth-oBar.offsetWidth;
+			}
+			oBar.style.left=l+'px';
+			if(oV.currentTime==oV.duration){
+				oStart.value='播放';
+				bOk=true;
+				oV.pause();
+				oV.currentTime=0;	
+			}
+		};
+		oBar.onmousedown=function(ev){
+			var disX=ev.clientX-oBar.offsetLeft;
+			document.onmousemove=function(ev){
+				var l=ev.clientX-disX;	
+				if(l>oBox.offsetWidth-oBar.offsetWidth){
+					l=oBox.offsetWidth-oBar.offsetWidth;
+				}else if(l<0){
+					l=0;	
+				}
+				oBar.style.left=l+'px';
+				oBabox.style.width=l+'px';
+				oV.currentTime=l/oBox.offsetWidth*oV.duration;
+			};
+			document.onmouseup=function(){
+				document.onmousemove=null;
+				document.onmouseup=null;	
+			};
+			return false;
+		};
+		oBox.onmousedown=function(ev){
+			var disX=ev.clientX-oBox.offsetLeft;
+			var scale=disX/oBox.offsetWidth;	
+			oBar.style.left=oBox.offsetWidth*scale+'px';
+			oBabox.style.width=oBox.offsetWidth*scale+'px';
+			oV.currentTime=scale*oV.duration;
+		};
+	};
+</script>
+<body>
+<video src="http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4"></video>
+<div class="box">
+	<div class="barbox"></div>
+	<div class="bar"></div>
+</div>
+<input type="button" value="播放" id="start" />
+<input type="button" value="停止" id="cut" />
+
+</body>
+</html>

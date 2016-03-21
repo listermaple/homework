@@ -1,0 +1,14 @@
+<!doctype html>
+<html ng-app="">
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<script src="angular.js">
+</script>
+<body>
+<ul ng-init="arr=[{'name':'张森','age':'18'},{'name':'张森','age':'18'},{'name':'张森','age':'18'},{'name':'张森','age':'18'},{'name':'张森','age':'18'},{'name':'张森','age':'18'},{'name':'张森','age':'18'}]">
+	<li ng-repeat="item in arr">我叫{{item.name}}，今年{{item.age}}岁</li>
+</ul>
+</body>
+</html>

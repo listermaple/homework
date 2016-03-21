@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+	div{width:100px;height:100px;background:#ccc;margin:100px auto;}
+</style>
+<script>
+	window.onload=function(){
+		var oDiv=document.querySelector('div');
+		oDiv.style.WebkitTransition='1s all ease';
+		oDiv.style.MozTransition='1s all ease';
+		oDiv.style.msTransition='1s all ease';
+		oDiv.style.transition='1s all ease';	
+		oDiv.onmouseover=function(){
+			this.style.width='400px';
+			this.style.height='400px';	
+		};
+	};
+</script>
+<body>
+<div></div>
+</body>
+</html>

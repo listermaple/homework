@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+	#box{width:200px;}
+	#box div{width:200px;height:200px;background:#ccc;display:none;}
+	#box div.on{display:block;}
+	#box input.on{background:red;}
+</style>
+<script>
+	function Tap(id){
+		if(!id){return ;}
+		this.oBox=document.getElementById(id);
+		this.aBtn=this.oBox.getElementsByTagName('input');
+		this.aDiv=this.oBox.getElementsByTagName('div');
+		this.iNow=0;
+		this.init();	
+	}
+	Tap.prototype.init=function(){
+		var _this=this;
+		for(var i=0;i<this.aBtn.length;i++){
+			this.aBtn[i].index=i;
+			this.aBtn[i].onclick=function(){
+				_this.iNow=this.index;
+				_this.hide();
+				_this.show();	
+			};
+		}	
+	};
+	Tap.prototype.hide=function(){
+		for(var i=0;i<this.aBtn.length;i++){
+			this.aBtn[i].className='';
+			this.aDiv[i].className='';
+		}	
+	};
+	Tap.prototype.show=function(){
+		this.aBtn[this.iNow].className='on';
+		this.aDiv[this.iNow].className='on';
+	};
+	function AutoTap(id){
+		Tap.call(this,id);	
+		this.timer=null;
+		this.autoinit();
+	};
+	AutoTap.prototype=new Tap();
+	AutoTap.prototype.constructor=AutoTap;
+	AutoTap.prototype.autoinit=function(){
+		this.next();
+		this.close();
+		this.fnOut();	
+	};
+	AutoTap.prototype.next=function(){
+		var _this=this;
+		this.timer=setInterval(function(){
+			_this.iNow++;
+			if(_this.iNow==_this.aBtn.length){
+				_this.iNow=0;	
+			}
+			_this.hide();
+			_this.show();
+		},1000);	
+	};
+	AutoTap.prototype.close=function(){
+		var _this=this;
+		this.oBox.onmouseover=function(){
+			clearInterval(_this.timer);	
+		};	
+	};
+	AutoTap.prototype.fnOut=function(){
+		var _this=this;
+		this.oBox.onmouseout=function(){
+			_this.next();	
+		};	
+	};
+	/*AutoTap.prototype.close=function(){
+		clearInterval(this.timer);	
+	};
+	AutoTap.prototype.open=function(){
+		this.next();	
+	};*/
+	window.onload=function(){
+		new AutoTap('box');	
+	};
+</script>
+<body>
+<div id="box">
+	<input type="button" value="111" class="on" />
+	<input type="button" value="222" />
+	<input type="button" value="333" />
+	<div class="on">111</div>
+	<div>222</div>
+	<div>333</div>
+</div>
+
+</body>
+</html>

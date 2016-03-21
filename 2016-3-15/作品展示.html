@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+*{margin:0padding:0;list-style:none;}
+body , html {overflow-x:hidden;}
+body{background:#f1f1f1;}
+.box{width:800px;height:400px;position:absolute;left:50%;top:50%;margin:-200px 0 0 -400px;perspective:800px;}
+.box li{width:100%;height:100%;position:absolute;left:0;top:0; opacity:0;-webkit-transition:0.5s all linear;}
+.box .cur{ opacity:1;z-index:5;}
+.box .r1{ opacity:0.7;-webkit-transform:translateX(400px) rotateY(-60deg);z-index:3;}
+.box .r2{ opacity:0;-webkit-transform:translateX(600px) rotateY(-65deg);z-index:1;}
+.box .l1{ opacity:0.7;-webkit-transform:translateX(-400px) rotateY(60deg);z-index:3;}
+.box .l2{ opacity:0;-webkit-transform:translateX(-600px) rotateY(65deg);z-index:1;}
+.box li img{width:800px;height:400px;}
+a{position:absolute;width:100px;height:50px;font-size:30px;text-align:center;line-height:50px;text-decoration:none;color:#f90;top:50px;background:rgba(102,102,102,0.2);border-radius:15px;}
+.prev{left:300px;}
+.next{left:970px;}
+</style>
+<script>
+	window.onload=function(){
+		var oPrev=document.querySelector('.prev');
+		var oNext=document.querySelector('.next');	
+		var aLi=document.querySelectorAll('li');
+		var arr=[];
+		for(var i=0;i<aLi.length;i++){
+			arr.push(aLi[i].className);
+		}
+		oPrev.onclick=function(){
+			arr.push(arr.shift());
+			for(var i=0;i<aLi.length;i++){
+				aLi[i].className=arr[i];
+			}	
+		};
+		oNext.onclick=function(){
+			arr.unshift(arr.pop());
+			for(var i=0;i<aLi.length;i++){
+				aLi[i].className=arr[i];
+			}	
+		};
+	};
+</script>
+<body>
+	<a href="javascript:;" class="prev">上一张</a>
+	<a href="javascript:;" class="next">下一张</a>
+	<ul class="box">
+		<li class="cur"><img src="img/1.jpg" alt="" /></li>
+		<li class="r1"><img src="img/2.jpg" alt="" /></li>
+		<li class="r2"><img src="img/3.jpg" alt="" /></li>
+		<li><img src="img/4.jpg" alt="" /></li>
+		<li><img src="img/5.jpg" alt="" /></li>
+		<li><img src="img/6.jpg" alt="" /></li>
+		<li><img src="img/7.jpg" alt="" /></li>
+		<li><img src="img/8.jpeg" alt="" /></li>
+		<li><img src="img/9.jpg" alt="" /></li>
+		<li class="l2"><img src="img/10.jpg" alt="" /></li>
+		<li class="l1"><img src="img/11.jpg" alt="" /></li>
+	</ul>
+</body>
+</html>

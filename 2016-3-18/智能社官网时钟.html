@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+<style>
+*{margin:0;padding:0;list-style:none;}
+body{background:#000;}
+.box{width:100px;height:100px;position:absolute;left:50%;top:50%;margin:-50px 0 0 -50px;-webkit-transform-style:preserve-3d;-webkit-transform:perspective(800px);}
+.box li{width:100%;height:100%;position:absolute;left:0;top:0;line-height:100px;text-align:center;font-size:40px;color:#fff;border:1px solid #7d689d; text-shadow: 0 0 5px #BB90FC, 0 0 6px #BB90FC, 0 0 7px #BB90FC, 0 0 8px #BB90FC, 0 0 9px #BB90FC;}
+.box .front{-webkit-transform:translateZ(50px);}
+.box .back{-webkit-transform:translateZ(-50px);}
+.box .top{-webkit-transform:translateY(-50px) rotateX(90deg);}
+.box .bom{-webkit-transform:translateY(50px) rotateX(-90deg);}
+</style>
+<script>
+	window.onload=function(){
+		var oBox=document.querySelector('.box');
+		var aLi=document.querySelectorAll('li');
+		var oLi1=document.querySelector('.front');
+		var oLi2=document.querySelector('.top');
+		var N=0;
+		setInterval(function(){
+			var oDate=new Date();
+			var S=oDate.getSeconds();
+			//for(var i=0;i<aLi.length;i++){
+				//aLi[i].classList.remove('cur')
+				oLi2.innerHTML=S+1;
+				oLi1.innerHTML=S;
+			//}
+			oBox.style.WebkitTransition='1s all ease';
+			oBox.style.WebkitTransform='rotateX(-90deg)';
+			oBox.addEventListener('transitionend',function(){
+				oBox.style.WebkitTransition='none';
+				oBox.style.WebkitTransform='rotateX(0deg)';
+			},false);	
+		},1000);	
+	};
+</script>
+<body>
+	<ul class="box">
+		<li class="front cur">1</li>
+		<li class="top">2</li>
+		<li class="bom">3</li>
+		<li class="back">4</li>
+	</ul>
+</body>
+</html>
